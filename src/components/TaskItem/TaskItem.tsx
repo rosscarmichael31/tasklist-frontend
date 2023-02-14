@@ -29,7 +29,7 @@ export const TaskItem: React.FC<TaskProps> = ({
   onDelete,
 }) => {
   return (
-    <s.TaskContainer data-testid="task-item">
+    <s.TaskContainer data-testid="task-item" completed={completed}>
       <s.TaskName>{description}</s.TaskName>
       <Priority priority={priority}></Priority>
 

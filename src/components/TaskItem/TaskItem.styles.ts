@@ -1,4 +1,7 @@
 import styled, { keyframes } from "styled-components";
+type Props = {
+  completed: boolean;
+};
 
 const fadeIn = keyframes`
   from {
@@ -9,10 +12,10 @@ const fadeIn = keyframes`
   }
 `;
 
-const TaskContainer = styled.div`
+const TaskContainer = styled.div<Props>`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin-bottom: 16px;
   padding: 1.5em;
@@ -21,6 +24,8 @@ const TaskContainer = styled.div`
   border-radius: 50px;
   box-shadow: 3px -3px 2px rgb(0 0 0 / 0.2);
   animation: ${fadeIn} 0.5s ease-in-out;
+
+  opacity: ${({ completed }) => (completed ? 0.7 : 1)};
 `;
 
 const TaskName = styled.div`

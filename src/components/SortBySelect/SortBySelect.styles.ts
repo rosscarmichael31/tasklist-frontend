@@ -6,6 +6,7 @@ const SortBySelect = styled.select`
   border: 1px solid #ccc;
   border-radius: 4px;
   outline: none;
+  margin-bottom: 1em;
 
   select:invalid {
     color: gray;
