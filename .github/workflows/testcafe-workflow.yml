@@ -1,0 +1,19 @@
+name: End-to-End Tests
+on: [push]
+
+jobs:
+  test:
+    name: Run TestCafe Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v1
+      - name: Run tests chrome
+        uses: DevExpress/testcafe-action@latest
+        with:
+          args: "chrome ./tests/E2E"
+          
+       - name: Run tests firefox
+         uses: DevExpress/testcafe-action@latest
+         with:
+          args: "firefox ./tests/E2E"
