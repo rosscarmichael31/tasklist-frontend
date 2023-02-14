@@ -4,6 +4,7 @@ fixture("Tasklist").page("http://localhost:3000");
 
 test("Can add a task", async (t) => {
   await t
+    .wait(1000)
     .typeText(tasklist.input, "Test task1")
     .click(tasklist.addButton)
     .expect(tasklist.taskItem.exists)
@@ -12,6 +13,7 @@ test("Can add a task", async (t) => {
 
 test("Can delete a task", async (t) => {
   await t
+    .wait(1000)
     .typeText(tasklist.input, "Test task2")
     .click(tasklist.addButton)
     .expect(tasklist.taskItem.exists)
