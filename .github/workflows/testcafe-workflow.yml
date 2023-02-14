@@ -17,6 +17,8 @@ jobs:
           node-version: "14"
       - run: npm install
 
+      - run: npm start
+
       - name: Run TestCafe tests on Chrome
         run: npx testcafe chrome:headless tests/E2E
 

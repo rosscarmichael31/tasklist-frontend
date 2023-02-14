@@ -1,4 +1,5 @@
 import tasklist from "../objects/tasklist";
+import { fixture } from "testcafe";
 
 fixture("Tasklist").page("http://localhost:3000");
 
