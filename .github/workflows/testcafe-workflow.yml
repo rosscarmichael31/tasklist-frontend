@@ -12,8 +12,8 @@ jobs:
         uses: DevExpress/testcafe-action@latest
         with:
           args: "chrome ./tests/E2E"
-          
-       - name: Run tests firefox
-         uses: DevExpress/testcafe-action@latest
-         with:
+
+      - name: Run tests firefox
+        uses: DevExpress/testcafe-action@latest
+        with:
           args: "firefox ./tests/E2E"
