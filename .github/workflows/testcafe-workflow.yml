@@ -1,19 +1,24 @@
-name: End-to-End Tests
-on: [push]
+name: TestCafe Tests
+
+on:
+  push:
+    branches: ["*"]
 
 jobs:
   test:
-    name: Run TestCafe Tests
     runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v1
-      - name: Run tests chrome
-        uses: DevExpress/testcafe-action@latest
-        with:
-          args: "chrome ./tests/E2E"
 
-      - name: Run tests firefox
-        uses: DevExpress/testcafe-action@latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Node.js and dependencies
+        uses: actions/setup-node@v2
         with:
-          args: "firefox ./tests/E2E"
+          node-version: "14"
+      - run: npm install
+
+      - name: Run TestCafe tests on Chrome
+        run: npx testcafe chrome:headless tests/E2E
+
+      - name: Run TestCafe tests on Firefox
+        run: npx testcafe firefox:headless tests/E2E
