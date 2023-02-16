@@ -12,7 +12,11 @@ export const DropdownSelect: React.FC<Props> = ({
   options,
 }) => {
   return (
-    <s.DropdownSelect value={value!} onChange={(e) => onChange(e)}>
+    <s.DropdownSelect
+      data-testid={"dropdown"}
+      value={value!}
+      onChange={(e) => onChange(e)}
+    >
       {options!.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}

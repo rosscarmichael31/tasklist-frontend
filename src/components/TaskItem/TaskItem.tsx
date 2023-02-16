@@ -35,6 +35,7 @@ export const TaskItem: React.FC<TaskProps> = ({
 
       <Checkbox
         label={properties.IN_PROGRESS_LABEL}
+        ariaLabel={"In progress checkbox"}
         value={inProgress}
         id={id}
         onChange={handleProgressUpdate}
@@ -42,6 +43,7 @@ export const TaskItem: React.FC<TaskProps> = ({
 
       <Checkbox
         label={properties.COMPLETED_LABEL}
+        ariaLabel={"Completed checkbox"}
         value={completed}
         id={id}
         onChange={handleCompletedUpdate}

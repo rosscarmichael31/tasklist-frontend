@@ -26,7 +26,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:chrome": "testcafe chrome ./tests/E2E",
-    "test:firefox": "testcafe firefox ./tests/E2E"
+    "test:firefox": "testcafe firefox ./tests/E2E",
+    "test:safari": "testcafe safari ./tests/E2E"
   },
   "eslintConfig": {
     "extends": [

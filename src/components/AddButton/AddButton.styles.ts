@@ -7,7 +7,7 @@ const AddButton = styled.button`
 
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   font-size: 16px;
   cursor: pointer;
   &:hover {
