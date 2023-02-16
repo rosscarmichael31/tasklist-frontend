@@ -21,6 +21,8 @@ function App() {
     searchQuery
   );
 
+  console.log(data);
+
   const handleProgressUpdate = (id: number) => {
     const task = data?.filter((t) => t.id === id).pop();
     task!.inProgress = !task?.inProgress;

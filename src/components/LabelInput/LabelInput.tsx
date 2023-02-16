@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import s from "./LabelInput.styles";
+import { LabelBox } from "../LabelBox/LabelBox";
 
 interface Props {
   labels: string[];
@@ -44,13 +45,12 @@ export const LabelInput: React.FC<Props> = ({ labels, setLabels }) => {
       />
       <s.LabelContainer>
         {labels.map((label, index) => (
-          <s.LabelBox key={index}>
-            <s.LabelText>{label}</s.LabelText>
-            {/* TODO: reuse DeleteButton component */}
-            <s.DeleteIcon onClick={() => handleLabelDelete(index)}>
-              x
-            </s.DeleteIcon>
-          </s.LabelBox>
+          <LabelBox
+            key={index}
+            index={index}
+            label={label}
+            onClick={handleLabelDelete}
+          />
         ))}
       </s.LabelContainer>
     </form>
