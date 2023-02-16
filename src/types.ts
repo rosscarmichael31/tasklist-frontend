@@ -4,6 +4,7 @@ export interface Task {
   complete: boolean;
   inProgress: boolean;
   priority: number;
+  labels?: string[];
 }
 
 export interface Field {

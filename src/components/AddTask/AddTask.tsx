@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import properties from "../../properties";
 import { Task } from "../../types";
 import { AddButton } from "../AddButton/AddButton";
+import { LabelInput } from "../LabelInput/LabelInput";
 import { Field } from "../../types";
 
 import s from "./AddTask.styles";
@@ -9,9 +10,11 @@ import { FieldFactory } from "../FieldFactory/FieldFactory";
 
 interface Props {
   onAdd: (task: Task) => void;
+  labels: string[];
+  setLabels: Dispatch<SetStateAction<string[]>>;
 }
 
-export const AddTask: React.FC<Props> = ({ onAdd }) => {
+export const AddTask: React.FC<Props> = ({ onAdd, labels, setLabels }) => {
   const [description, setDescription] = useState<string | null>("");
   const [priority, setPriority] = useState<string | null>("");
 
@@ -37,6 +40,7 @@ export const AddTask: React.FC<Props> = ({ onAdd }) => {
       priority: priorityPayload,
       inProgress: false,
       completed: false,
+      labelNames: labels,
     });
 
     fetch(`${properties.ENDPOINT}/tasks`, {
@@ -85,15 +89,18 @@ export const AddTask: React.FC<Props> = ({ onAdd }) => {
   ];
 
   return (
-    <s.FormContainer onSubmit={(e) => handleSubmit(e)}>
-      {fields.map((field) => (
-        <FieldFactory key={field.type} {...field} />
-      ))}
-      <AddButton
-        text={"Add"}
-        ariaLabel={"Add task"}
-        disabled={description && description.trim().length > 0 ? true : false}
-      />
-    </s.FormContainer>
+    <>
+      <s.FormContainer onSubmit={(e) => handleSubmit(e)}>
+        {fields.map((field) => (
+          <FieldFactory key={field.type} {...field} />
+        ))}
+        <AddButton
+          text={"Add"}
+          ariaLabel={"Add task"}
+          disabled={description && description.trim().length > 0 ? true : false}
+        />
+      </s.FormContainer>
+      <LabelInput labels={labels} setLabels={setLabels} />
+    </>
   );
 };

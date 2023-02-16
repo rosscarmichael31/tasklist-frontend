@@ -8,6 +8,15 @@ const FormContainer = styled.form`
   padding: 20px;
 `;
 
-const styles = { FormContainer };
+const WrapperContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* width: 50%;
+  margin: 0 auto;
+  padding: 20px; */
+`;
+
+const styles = { FormContainer, WrapperContainer };
 
 export default styles;

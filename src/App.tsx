@@ -12,6 +12,7 @@ import properties from "./properties";
 function App() {
   const [updatedTask, setUpdatedTask] = useState<Task | null>();
   const [sortKey, setSortKey] = useState<string | undefined>(undefined);
+  const [labels, setLabels] = useState<string[]>([]);
 
   const searchQuery = `tasks${sortKey ? `?sortBy=${sortKey}` : ""}`;
 
@@ -30,6 +31,14 @@ function App() {
     const task = data?.filter((t) => t.id === id).pop();
     task!.complete = !task?.complete;
     setUpdatedTask(task);
+  };
+
+  const handleTaskAdd = (task: Task) => {
+    setData((data: any) => {
+      const updatedTasks = [task, ...data];
+      return updatedTasks;
+    });
+    setLabels([]);
   };
 
   // Handle DELETE request
@@ -51,13 +60,6 @@ function App() {
       .catch((error) => {
         console.error(error);
       });
-  };
-
-  const handleTaskAdd = (task: Task) => {
-    setData((data: any) => {
-      const updatedTasks = [task, ...data];
-      return updatedTasks;
-    });
   };
 
   // Handle PUT request
@@ -84,24 +86,6 @@ function App() {
           console.error(error);
         });
   }, [updatedTask]);
-
-  const renderTasks = () => {
-    if (error) return <p>{properties.ERROR_MESSAGE}</p>;
-    if (loading) return <p>{properties.LOADING_MESSAGE}</p>;
-
-    if (data && data.length > 0) {
-      return data.map((task) => (
-        <TaskItem
-          {...task}
-          key={task.id}
-          completed={task.complete}
-          handleCompletedUpdate={handleCompletedUpdate}
-          handleProgressUpdate={handleProgressUpdate}
-          onDelete={onDelete}
-        />
-      ));
-    }
-  };
 
   const sortOptions = [
     properties.NONE,
@@ -136,12 +120,34 @@ function App() {
     }
   };
 
+  const renderTasks = () => {
+    if (error) return <p>{properties.ERROR_MESSAGE}</p>;
+    if (loading) return <p>{properties.LOADING_MESSAGE}</p>;
+
+    if (data && data.length > 0) {
+      return data.map((task) => (
+        <TaskItem
+          {...task}
+          key={task.id}
+          completed={task.complete}
+          handleCompletedUpdate={handleCompletedUpdate}
+          handleProgressUpdate={handleProgressUpdate}
+          onDelete={onDelete}
+        />
+      ));
+    }
+  };
+
   return (
     <s.Wrapper>
       <s.Main>
         <>
           <s.Heading>Tasks</s.Heading>
-          <AddTask onAdd={handleTaskAdd} />
+          <AddTask
+            onAdd={handleTaskAdd}
+            labels={labels}
+            setLabels={setLabels}
+          />
           <SortBySelect options={sortOptions} data={data!} onSort={onSort} />
           {renderTasks()}
         </>
