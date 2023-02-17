@@ -34,7 +34,7 @@ test("Can delete a task", async (t) => {
 });
 
 test("Can add and delete multiple tasks", async (t) => {
-  let count = 1;
+  let count = 5;
   for (let i = 0; i < count; i++) {
     await t
       .typeText(tasklist.input, "TEST_TASK")

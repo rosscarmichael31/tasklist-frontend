@@ -3,11 +3,14 @@ import s from "./LabelInput.styles";
 import { LabelBox } from "../LabelBox/LabelBox";
 
 interface Props {
-  labels: string[];
-  setLabels: Dispatch<SetStateAction<string[]>>;
+  labelsString: string[];
+  setLabelsString: Dispatch<SetStateAction<string[]>>;
 }
 
-export const LabelInput: React.FC<Props> = ({ labels, setLabels }) => {
+export const LabelInput: React.FC<Props> = ({
+  labelsString,
+  setLabelsString,
+}) => {
   const [label, setLabel] = useState("");
 
   const handleLabelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,20 +21,20 @@ export const LabelInput: React.FC<Props> = ({ labels, setLabels }) => {
   // pass in setLabels, labels
   const handleLabelKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if ((e.key === "Enter" || e.key === " ") && label.trim() !== "") {
-      setLabels([...labels, label.trim()]);
+      setLabelsString([...labelsString, label.trim()]);
       setLabel("");
     }
   };
 
   // pass in setLabels, labels
   const handleLabelDelete = (index: number) => {
-    setLabels(labels.filter((_, i) => i !== index));
+    setLabelsString(labelsString.filter((_, i) => i !== index));
   };
 
   // pass in labels
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLabels(labels);
+    setLabelsString(labelsString);
   };
 
   return (
@@ -44,7 +47,7 @@ export const LabelInput: React.FC<Props> = ({ labels, setLabels }) => {
         onKeyDown={handleLabelKeyDown}
       />
       <s.LabelContainer>
-        {labels.map((label, index) => (
+        {labelsString.map((label, index) => (
           <LabelBox
             key={index}
             index={index}
@@ -56,12 +59,3 @@ export const LabelInput: React.FC<Props> = ({ labels, setLabels }) => {
     </form>
   );
 };
-
-// export const TaskForm = () => {
-//   const handleSubmit = (labels: string[]) => {
-//     // Do something with the labels array, such as passing it back to the main app
-//     console.log(labels);
-//   };
-
-//   return <LabelInput onSubmit={handleSubmit} />;
-// };

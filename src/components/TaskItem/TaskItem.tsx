@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { Priority } from "../Priority/Priority";
 import { DeleteButton } from "../DeleteButton/DeleteButton";
 
@@ -6,6 +6,7 @@ import s from "./TaskItem.styles";
 import { Checkbox } from "../Checkbox/Checkbox";
 import properties from "../../properties";
 import { LabelBox } from "../LabelBox/LabelBox";
+import { APILabel } from "../../types";
 
 export interface TaskProps {
   id: number;
@@ -13,7 +14,7 @@ export interface TaskProps {
   priority: number;
   inProgress: boolean;
   completed: boolean;
-  labelNames?: string[];
+  labels?: APILabel[];
 
   handleProgressUpdate(id: number): void;
   handleCompletedUpdate(id: number): void;
@@ -23,7 +24,7 @@ export interface TaskProps {
 export const TaskItem: React.FC<TaskProps> = ({
   id,
   description,
-  labelNames,
+  labels,
   inProgress,
   completed,
   priority,
@@ -31,14 +32,16 @@ export const TaskItem: React.FC<TaskProps> = ({
   handleCompletedUpdate,
   onDelete,
 }) => {
+  const tags: string[] | undefined = labels?.map((label) => label.name);
+
   return (
     <s.TaskContainer data-testid="task-item" completed={completed}>
       <s.TaskName>{description}</s.TaskName>
 
       <s.LabelBoxContainer>
-        {labelNames &&
-          labelNames.map((label, index) => (
-            <LabelBox key={index} index={index} label={label} />
+        {tags &&
+          tags.map((tag, index) => (
+            <LabelBox key={index} index={index} label={tag} />
           ))}
       </s.LabelBoxContainer>
       <Priority priority={priority}></Priority>

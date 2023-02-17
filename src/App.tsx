@@ -12,7 +12,7 @@ import properties from "./properties";
 function App() {
   const [updatedTask, setUpdatedTask] = useState<Task | null>();
   const [sortKey, setSortKey] = useState<string | undefined>(undefined);
-  const [labels, setLabels] = useState<string[]>([]);
+  const [labelsString, setLabelsString] = useState<string[]>([]);
 
   const searchQuery = `tasks${sortKey ? `?sortBy=${sortKey}` : ""}`;
 
@@ -20,8 +20,6 @@ function App() {
     properties.ENDPOINT,
     searchQuery
   );
-
-  console.log(data);
 
   const handleProgressUpdate = (id: number) => {
     const task = data?.filter((t) => t.id === id).pop();
@@ -40,7 +38,7 @@ function App() {
       const updatedTasks = [task, ...data];
       return updatedTasks;
     });
-    setLabels([]);
+    setLabelsString([]);
   };
 
   // Handle DELETE request
@@ -147,8 +145,8 @@ function App() {
           <s.Heading>Tasks</s.Heading>
           <AddTask
             onAdd={handleTaskAdd}
-            labels={labels}
-            setLabels={setLabels}
+            labelsString={labelsString}
+            setLabelsString={setLabelsString}
           />
           <SortBySelect options={sortOptions} data={data!} onSort={onSort} />
           {renderTasks()}

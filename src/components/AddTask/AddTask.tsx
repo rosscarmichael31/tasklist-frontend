@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import properties from "../../properties";
-import { Task } from "../../types";
+import { APILabel, Task } from "../../types";
 import { AddButton } from "../AddButton/AddButton";
 import { LabelInput } from "../LabelInput/LabelInput";
 import { Field } from "../../types";
@@ -10,11 +10,15 @@ import { FieldFactory } from "../FieldFactory/FieldFactory";
 
 interface Props {
   onAdd: (task: Task) => void;
-  labels: string[];
-  setLabels: Dispatch<SetStateAction<string[]>>;
+  labelsString: string[];
+  setLabelsString: Dispatch<SetStateAction<string[]>>;
 }
 
-export const AddTask: React.FC<Props> = ({ onAdd, labels, setLabels }) => {
+export const AddTask: React.FC<Props> = ({
+  onAdd,
+  labelsString,
+  setLabelsString,
+}) => {
   const [description, setDescription] = useState<string | null>("");
   const [priority, setPriority] = useState<string | null>("");
 
@@ -35,12 +39,17 @@ export const AddTask: React.FC<Props> = ({ onAdd, labels, setLabels }) => {
         priorityPayload = 3;
         break;
     }
+
+    const labelsAPI: APILabel[] = labelsString.map((name) => {
+      return { name };
+    });
+
     const payload: string = JSON.stringify({
       description,
       priority: priorityPayload,
       inProgress: false,
       completed: false,
-      labelNames: labels,
+      labels: labelsAPI,
     });
 
     fetch(`${properties.ENDPOINT}/tasks`, {
@@ -100,7 +109,10 @@ export const AddTask: React.FC<Props> = ({ onAdd, labels, setLabels }) => {
           disabled={description && description.trim().length > 0 ? true : false}
         />
       </s.FormContainer>
-      <LabelInput labels={labels} setLabels={setLabels} />
+      <LabelInput
+        labelsString={labelsString}
+        setLabelsString={setLabelsString}
+      />
     </>
   );
 };
