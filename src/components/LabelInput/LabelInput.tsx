@@ -18,7 +18,6 @@ export const LabelInput: React.FC<Props> = ({
     setLabel(e.target.value);
   };
 
-  // pass in setLabels, labels
   const handleLabelKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if ((e.key === "Enter" || e.key === " ") && label.trim() !== "") {
       setLabelsString([...labelsString, label.trim()]);
@@ -26,12 +25,10 @@ export const LabelInput: React.FC<Props> = ({
     }
   };
 
-  // pass in setLabels, labels
   const handleLabelDelete = (index: number) => {
     setLabelsString(labelsString.filter((_, i) => i !== index));
   };
 
-  // pass in labels
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLabelsString(labelsString);
@@ -39,13 +36,25 @@ export const LabelInput: React.FC<Props> = ({
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <s.Input
-        type="input"
-        placeholder="Add labels"
-        value={label}
-        onChange={handleLabelChange}
-        onKeyDown={handleLabelKeyDown}
-      />
+      {labelsString.length === 3 ? (
+        <s.Input
+          type="input"
+          placeholder="Add labels"
+          value={label}
+          onChange={handleLabelChange}
+          onKeyDown={handleLabelKeyDown}
+          disabled
+        />
+      ) : (
+        <s.Input
+          type="input"
+          placeholder="Add labels"
+          maxLength={14}
+          value={label}
+          onChange={handleLabelChange}
+          onKeyDown={handleLabelKeyDown}
+        />
+      )}
       <s.LabelContainer>
         {labelsString.map((label, index) => (
           <LabelBox

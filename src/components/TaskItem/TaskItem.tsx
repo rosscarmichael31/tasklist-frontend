@@ -33,7 +33,6 @@ export const TaskItem: React.FC<TaskProps> = ({
   onDelete,
 }) => {
   const tags: string[] | undefined = labels?.map((label) => label.name);
-
   return (
     <s.TaskContainer data-testid="task-item" completed={completed}>
       <s.TaskName>{description}</s.TaskName>
