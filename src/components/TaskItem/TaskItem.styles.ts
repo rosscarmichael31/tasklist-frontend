@@ -39,6 +39,11 @@ const TaskName = styled.div`
   }
 `;
 
-const styles = { TaskContainer, TaskName };
+const LabelBoxContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const styles = { TaskContainer, TaskName, LabelBoxContainer };
 
 export default styles;

@@ -34,7 +34,7 @@ test("Can delete a task", async (t) => {
 });
 
 test("Can add and delete multiple tasks", async (t) => {
-  let count = 1;
+  let count = 5;
   for (let i = 0; i < count; i++) {
     await t
       .typeText(tasklist.input, "TEST_TASK")
@@ -102,6 +102,36 @@ test("Can select completed", async (t) => {
     .click(tasklist.completed)
     .expect(tasklist.completed.checked)
     .eql(true)
+    .expect(tasklist.taskItem.count)
+    .eql(1);
+});
+
+test("Can add labels", async (t) => {
+  await t
+    .typeText(tasklist.input, "TEST_TASK")
+    .typeText(tasklist.labelInput, "label1")
+    .pressKey("space")
+    .typeText(tasklist.labelInput, "label2")
+    .pressKey("space")
+    .typeText(tasklist.labelInput, "label3")
+    .pressKey("space")
+
+    .click(tasklist.addButton)
+    .click(tasklist.completed)
+    .click(tasklist.inProgress)
+
+    .expect(tasklist.taskItem.withText("label1").exists)
+    .ok()
+    .expect(tasklist.taskItem.withText("label2").exists)
+    .ok()
+    .expect(tasklist.taskItem.withText("label3").exists)
+    .ok()
+
+    .expect(tasklist.completed.checked)
+    .eql(true)
+    .expect(tasklist.inProgress.checked)
+    .eql(true)
+
     .expect(tasklist.taskItem.count)
     .eql(1);
 });

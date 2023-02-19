@@ -12,6 +12,7 @@ const selectors = {
   highSelect: Selector('option[value="High"]'),
   inProgress: Selector('input[aria-label="In progress checkbox"]'),
   completed: Selector('input[aria-label="Completed checkbox"]'),
+  labelInput: Selector('input[placeholder="Add labels"]'),
 };
 
 export default selectors;

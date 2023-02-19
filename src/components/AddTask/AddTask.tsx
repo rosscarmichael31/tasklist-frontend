@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import properties from "../../properties";
-import { Task } from "../../types";
+import { APILabel, Task } from "../../types";
 import { AddButton } from "../AddButton/AddButton";
+import { LabelInput } from "../LabelInput/LabelInput";
 import { Field } from "../../types";
 
 import s from "./AddTask.styles";
@@ -9,9 +10,15 @@ import { FieldFactory } from "../FieldFactory/FieldFactory";
 
 interface Props {
   onAdd: (task: Task) => void;
+  labelsString: string[];
+  setLabelsString: Dispatch<SetStateAction<string[]>>;
 }
 
-export const AddTask: React.FC<Props> = ({ onAdd }) => {
+export const AddTask: React.FC<Props> = ({
+  onAdd,
+  labelsString,
+  setLabelsString,
+}) => {
   const [description, setDescription] = useState<string | null>("");
   const [priority, setPriority] = useState<string | null>("");
 
@@ -32,11 +39,17 @@ export const AddTask: React.FC<Props> = ({ onAdd }) => {
         priorityPayload = 3;
         break;
     }
+
+    const labelsAPI: APILabel[] = labelsString.map((name) => {
+      return { name };
+    });
+
     const payload: string = JSON.stringify({
       description,
       priority: priorityPayload,
       inProgress: false,
       completed: false,
+      labels: labelsAPI,
     });
 
     fetch(`${properties.ENDPOINT}/tasks`, {
@@ -85,15 +98,21 @@ export const AddTask: React.FC<Props> = ({ onAdd }) => {
   ];
 
   return (
-    <s.FormContainer onSubmit={(e) => handleSubmit(e)}>
-      {fields.map((field) => (
-        <FieldFactory key={field.type} {...field} />
-      ))}
-      <AddButton
-        text={"Add"}
-        ariaLabel={"Add task"}
-        disabled={description && description.trim().length > 0 ? true : false}
+    <>
+      <s.FormContainer onSubmit={(e) => handleSubmit(e)}>
+        {fields.map((field) => (
+          <FieldFactory key={field.type} {...field} />
+        ))}
+        <AddButton
+          text={"Add"}
+          ariaLabel={"Add task"}
+          disabled={description && description.trim().length > 0 ? true : false}
+        />
+      </s.FormContainer>
+      <LabelInput
+        labelsString={labelsString}
+        setLabelsString={setLabelsString}
       />
-    </s.FormContainer>
+    </>
   );
 };

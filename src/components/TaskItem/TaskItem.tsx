@@ -5,6 +5,8 @@ import { DeleteButton } from "../DeleteButton/DeleteButton";
 import s from "./TaskItem.styles";
 import { Checkbox } from "../Checkbox/Checkbox";
 import properties from "../../properties";
+import { LabelBox } from "../LabelBox/LabelBox";
+import { APILabel } from "../../types";
 
 export interface TaskProps {
   id: number;
@@ -12,6 +14,7 @@ export interface TaskProps {
   priority: number;
   inProgress: boolean;
   completed: boolean;
+  labels?: APILabel[];
 
   handleProgressUpdate(id: number): void;
   handleCompletedUpdate(id: number): void;
@@ -21,16 +24,25 @@ export interface TaskProps {
 export const TaskItem: React.FC<TaskProps> = ({
   id,
   description,
-  priority,
+  labels,
   inProgress,
   completed,
+  priority,
   handleProgressUpdate,
   handleCompletedUpdate,
   onDelete,
 }) => {
+  const tags: string[] | undefined = labels?.map((label) => label.name);
   return (
     <s.TaskContainer data-testid="task-item" completed={completed}>
       <s.TaskName>{description}</s.TaskName>
+
+      <s.LabelBoxContainer>
+        {tags &&
+          tags.map((tag, index) => (
+            <LabelBox key={index} index={index} label={tag} />
+          ))}
+      </s.LabelBoxContainer>
       <Priority priority={priority}></Priority>
 
       <Checkbox
