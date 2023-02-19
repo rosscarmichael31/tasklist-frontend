@@ -66,7 +66,6 @@ export const AddTask: React.FC<Props> = ({
         return response.json();
       })
       .then((task) => {
-        console.log("POST success");
         onAdd(task);
         setDescription("");
       })
