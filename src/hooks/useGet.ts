@@ -29,7 +29,6 @@ export const useGet = <T>(
           return response.json();
         })
         .then((response: T[]) => {
-          console.log("CREATE success");
           setData(response);
           setError(false);
         })

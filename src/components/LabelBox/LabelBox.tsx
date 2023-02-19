@@ -10,7 +10,6 @@ export const LabelBox: React.FC<Props> = ({ index, label, onClick }) => {
   return (
     <s.LabelBox>
       <s.LabelText>{label}</s.LabelText>
-      {/* TODO: reuse DeleteButton component */}
       {onClick && <s.DeleteIcon onClick={() => onClick(index)}>x</s.DeleteIcon>}
     </s.LabelBox>
   );

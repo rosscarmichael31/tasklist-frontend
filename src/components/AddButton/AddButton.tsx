@@ -1,4 +1,5 @@
-import s from "./AddButton.styles";
+import { Button } from "@mui/material";
+import AddTaskIcon from "@mui/icons-material/AddTask";
 
 interface Props {
   text: string;
@@ -9,15 +10,26 @@ interface Props {
 export const AddButton: React.FC<Props> = ({ text, disabled, ariaLabel }) => {
   if (disabled) {
     return (
-      <s.AddButton type="submit" aria-label={ariaLabel}>
+      <Button
+        type="submit"
+        aria-label={ariaLabel}
+        variant="contained"
+        endIcon={<AddTaskIcon />}
+      >
         {text}
-      </s.AddButton>
+      </Button>
     );
   } else {
     return (
-      <s.AddButton disabled type="submit" aria-label={ariaLabel}>
+      <Button
+        disabled
+        type="submit"
+        aria-label={ariaLabel}
+        variant="contained"
+        endIcon={<AddTaskIcon />}
+      >
         {text}
-      </s.AddButton>
+      </Button>
     );
   }
 };

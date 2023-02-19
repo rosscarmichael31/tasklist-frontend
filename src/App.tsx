@@ -8,6 +8,8 @@ import { AddTask } from "./components/AddTask/AddTask";
 import { SortBySelect } from "./components/SortBySelect/SortBySelect";
 
 import properties from "./properties";
+import { AppHeader } from "./components/AppHeader/AppHeader";
+import { Container, Typography } from "@mui/material";
 
 function App() {
   const [updatedTask, setUpdatedTask] = useState<Task | null>();
@@ -54,7 +56,6 @@ function App() {
         }
       })
       .then(() => {
-        console.log("DELETE success");
         setData(data!.filter((t) => t.id !== id));
       })
       .catch((error) => {
@@ -79,7 +80,6 @@ function App() {
           return response.json();
         })
         .then(() => {
-          console.log("PUT success");
           setUpdatedTask(null);
         })
         .catch((error) => {
@@ -140,9 +140,12 @@ function App() {
 
   return (
     <s.Wrapper>
+      <AppHeader />
       <s.Main>
-        <>
-          <s.Heading>Tasks</s.Heading>
+        <Container maxWidth="lg">
+          <Typography variant="h2" gutterBottom>
+            Tasks
+          </Typography>
           <AddTask
             onAdd={handleTaskAdd}
             labelsString={labelsString}
@@ -150,7 +153,7 @@ function App() {
           />
           <SortBySelect options={sortOptions} data={data!} onSort={onSort} />
           {renderTasks()}
-        </>
+        </Container>
       </s.Main>
     </s.Wrapper>
   );

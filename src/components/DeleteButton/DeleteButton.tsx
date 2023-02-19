@@ -1,4 +1,5 @@
-import s from "./DeleteButton.styles";
+import { IconButton, Tooltip } from "@mui/material";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 
 interface Props {
   text: string;
@@ -14,8 +15,13 @@ export const DeleteButton: React.FC<Props> = ({
   onDelete,
 }) => {
   return (
-    <s.DeleteButton aria-label={ariaLabel} onClick={() => onDelete(id)}>
-      {text}
-    </s.DeleteButton>
+    <Tooltip title="Delete task" placement="top" arrow>
+      {/* <s.DeleteButton aria-label={ariaLabel} onClick={() => onDelete(id)}>
+        {text}
+      </s.DeleteButton> */}
+      <IconButton onClick={() => onDelete(id)} aria-label={ariaLabel}>
+        <ClearRoundedIcon color="error" />
+      </IconButton>
+    </Tooltip>
   );
 };
